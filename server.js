@@ -64,7 +64,7 @@ wsEta.on('open', () => {
 wsEta.on('message', (data) => {
   try {
     const message = JSON.parse(data);
-    const mmsi = message?.Message?.PositionReport?.UserID;
+    const mmsi = message?.Message?.ShipStaticData?.UserID;
 
     if (mmsi) {
       latestETAData[mmsi] = message;
