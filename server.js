@@ -4,7 +4,7 @@ const app = express();
 const PORT = 3000;
 
 const AISSTREAM_URL = 'wss://stream.aisstream.io/v0/stream';
-const API_KEY = '6173d416b6b3b7d2c8d7c3222d24dcecd797b931'; // substitui pela tua chave real
+const API_KEY = process.env.API_KEY;
 
 let latestData = {}; // Armazena dados por MMSI
 
