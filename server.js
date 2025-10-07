@@ -87,13 +87,13 @@ wsEta.on('close', () => {
 
 
 // 🔍 Rota para consultar todos os navios
-app.get('/ship', (req, res) => {
+app.get('/PositionReport', (req, res) => {
   res.json(Object.values(latestData));
 });
 
 // 🔍 Rota para consultar navio específico por MMSI
 
-app.get('/ship/:mmsi', (req, res) => {
+app.get('/PositionReport/:mmsi', (req, res) => {
   try {
     const mmsi = req.params.mmsi;
     if (!mmsi) throw new Error('MMSI não fornecido');
@@ -119,13 +119,13 @@ app.get('/ship/:mmsi', (req, res) => {
 
 
 // 🔍 Rota para consultar todos os navios
-app.get('/shipData', (req, res) => {
+app.get('/ShipStaticData', (req, res) => {
   res.json(Object.values(latestETAData));
 });
 
 // 🔍 Rota para consultar navio específico por MMSI
 
-app.get('/shipData/:mmsi', (req, res) => {
+app.get('/ShipStaticData/:mmsi', (req, res) => {
   try {
     const mmsi = req.params.mmsi;
     if (!mmsi) throw new Error('MMSI não fornecido');
