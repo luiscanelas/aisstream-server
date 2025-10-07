@@ -93,8 +93,8 @@ app.get('/ship', (req, res) => {
 // 🔍 Rota para consultar navio específico por MMSI
 app.get('/ship/:mmsi', (req, res) => {
   const mmsi = req.params.mmsi;
-  const shipData = latestETAData[mmsi];
-
+  //const shipData = latestETAData[mmsi];
+  const shipData = latestData.find(item => item.MetaData?.MMSI === mmsi);
   if (shipData) {
     res.json(shipData);
   } else {
