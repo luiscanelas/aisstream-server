@@ -97,7 +97,13 @@ app.get('/ship/:mmsi', (req, res) => {
     const mmsi = req.params.mmsi;
     if (!mmsi) throw new Error('MMSI não fornecido');
 
-    const shipData = Object.values(latestData).find(item => item?.MetaData?.MMSI === mmsi);
+    
+	const shipsArray = Array.isArray(latestData)
+		  ? latestData
+		  : Object.values(latestData || {});
+
+    const shipData = shipsArray.find(item => item?.MetaData?.MMSI === mmsi);
+
 
     if (shipData) {
       res.json(shipData);
