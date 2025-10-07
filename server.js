@@ -102,7 +102,7 @@ app.get('/ship/:mmsi', (req, res) => {
 		  ? latestData
 		  : Object.values(latestData || {});
 
-    const shipData = shipsArray.find(item => item?.MetaData?.MMSI === mmsi);
+    const shipData = shipsArray.find(item => String(item?.MetaData?.MMSI) === mmsi);
 
 
     if (shipData) {
