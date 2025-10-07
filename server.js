@@ -91,16 +91,25 @@ app.get('/ship', (req, res) => {
 });
 
 // 🔍 Rota para consultar navio específico por MMSI
+
 app.get('/ship/:mmsi', (req, res) => {
-  const mmsi = req.params.mmsi;
-  //const shipData = latestETAData[mmsi];
-  const shipData = latestData.find(item => item.MetaData?.MMSI === mmsi);
-  if (shipData) {
-    res.json(shipData);
-  } else {
-    res.status(404).json({ error: 'Navio não encontrado ou sem dados recentes.' });
+  try {
+    const mmsi = req.params.mmsi;
+    if (!mmsi) throw new Error('MMSI não fornecido');
+
+    const shipData = latestData.find(item => item?.MetaData?.MMSI === mmsi);
+
+    if (shipData) {
+      res.json(shipData);
+    } else {
+      res.status(404).json({ error: 'Navio não encontrado ou sem dados recentes.' });
+    }
+  } catch (error) {
+    console.error('Erro na rota /ship/:mmsi:', error);
+    res.status(500).json({ error: 'Erro interno do servidor.' });
   }
 });
+
 
 app.listen(PORT, () => {
   console.log(`🚀 Servidor a correr em http://localhost:${PORT}`);
