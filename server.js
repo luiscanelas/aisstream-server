@@ -4,7 +4,8 @@ const app = express();
 const PORT = 3000;
 
 const AISSTREAM_URL = 'wss://stream.aisstream.io/v0/stream';
-const API_KEY = process.env.API_KEY;
+//const API_KEY = process.env.API_KEY;
+const API_KEY = '6173d416b6b3b7d2c8d7c3222d24dcecd797b931'
 
 let latestData = {}; // Armazena dados por MMSI
 let latestETAData = {}; // Armazena dados por MMSI
@@ -116,6 +117,37 @@ app.get('/ship/:mmsi', (req, res) => {
   }
 });
 
+
+// 🔍 Rota para consultar todos os navios
+app.get('/shipData', (req, res) => {
+  res.json(Object.values(latestETAData));
+});
+
+// 🔍 Rota para consultar navio específico por MMSI
+
+app.get('/shipData/:mmsi', (req, res) => {
+  try {
+    const mmsi = req.params.mmsi;
+    if (!mmsi) throw new Error('MMSI não fornecido');
+
+    
+	const shipsArray = Array.isArray(latestETAData)
+		  ? latestData
+		  : Object.values(latestData || {});
+
+    const shipData = shipsArray.find(item => String(item?.MetaData?.MMSI) === mmsi);
+
+
+    if (shipData) {
+      res.json(shipData);
+    } else {
+      res.status(404).json({ error: 'Navio não encontrado ou sem dados recentes.' });
+    }
+  } catch (catchederror) {
+    console.error('Erro na rota /ship/:mmsi:', catchederror);
+    res.status(500).json({ error: catchederror });
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`🚀 Servidor a correr em http://localhost:${PORT}`);
