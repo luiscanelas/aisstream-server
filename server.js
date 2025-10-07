@@ -106,7 +106,7 @@ app.get('/ship/:mmsi', (req, res) => {
     }
   } catch (error) {
     console.error('Erro na rota /ship/:mmsi:', error);
-    res.status(500).json({ error: 'Erro interno do servidor.' });
+    res.status(500).json({ error: error });
   }
 });
 
