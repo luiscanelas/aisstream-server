@@ -132,8 +132,8 @@ app.get('/ShipStaticData/:mmsi', (req, res) => {
 
     
 	const shipsArray = Array.isArray(latestETAData)
-		  ? latestData
-		  : Object.values(latestData || {});
+		  ? latestETAData
+		  : Object.values(latestETAData || {});
 
     const shipData = shipsArray.find(item => String(item?.MetaData?.MMSI) === mmsi);
 
