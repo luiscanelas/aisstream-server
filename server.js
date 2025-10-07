@@ -104,9 +104,9 @@ app.get('/ship/:mmsi', (req, res) => {
     } else {
       res.status(404).json({ error: 'Navio não encontrado ou sem dados recentes.' });
     }
-  } catch (error) {
-    console.error('Erro na rota /ship/:mmsi:', error);
-    res.status(500).json({ error: error });
+  } catch (catchederror) {
+    console.error('Erro na rota /ship/:mmsi:', catchederror);
+    res.status(500).json({ error: catchederror });
   }
 });
 
